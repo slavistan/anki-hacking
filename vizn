@@ -1,0 +1,90 @@
+#!/usr/bin/env zsh
+
+DB="collection.vizn"
+
+errln() {
+  echo "\033[31;1m[ERR ]\033[0m $@"
+}
+
+logln() {
+  echo "\033[32;1m[INFO]\033[0m $@"
+}
+
+card() {
+  if [ ! "$#" -eq 0 ]; then
+    card_"$@"
+  else
+    card_usage
+  fi
+}
+
+card_create() {
+  if [ ! "$#" -eq 0 ]; then
+    [ "$2" = "" ] && info="NULL" || info="$2"
+    id=$(date '+%s')
+    reply=$(sqlite3 "$DB" "insert into cards(id, action, info) values("$id", '$1', '$info');" 2>&1)
+    if [ ! "$?" -eq 0 ]; then
+      errln "$reply"
+      exit 1
+    fi
+    logln "Created new card with the following data:"
+    logln "  - id     : $id"
+    logln "  - action : $1"
+    logln "  - info   : $info"
+  else
+    card_create_usage
+  fi
+}
+
+card_create_usage() {
+  echo "card_create_usage: TODO"
+}
+
+card_view() {
+  if [ ! "$#" -eq 0 ]; then
+    reply=$(sqlite3 "$DB" "select action from cards where id==$1;" 2>&1)
+    if [ "$?" -eq 0 ]; then
+      logln "Viewing card '$1'."
+      eval "$reply"
+    else
+      errln "No card matches id '$1'. Nothing done."
+      exit 1
+    fi
+  fi
+}
+
+card_usage() {
+  echo "card_usage: TODO"
+}
+
+deck() {
+  if [ ! "$#" -eq 0 ]; then
+    deck_"$@"
+  else
+    deck_usage
+  fi
+}
+
+deck_create() {
+  if [ -e "$1" ]; then
+    errln "File '$1' already exists. Nothing done."
+    exit 1
+  else
+    sqlite3 "$1" 'create table cards(id integer primary key, action text not null, info text);'
+    logln "Created new deck '$1'."
+  fi
+}
+
+deck_usage() {
+  echo "deck_usage: TODO"
+}
+
+usage() {
+  echo "TODO"
+}
+
+if [ ! "$#" = "0" ]; then
+  "$@"
+else
+  usage
+fi

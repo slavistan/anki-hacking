@@ -1,5 +1,8 @@
 #!/usr/bin/env zsh
 
+THISFILE=${0}
+THISDIR=${0:A:h}
+
 DB="collection.vizn"
 
 errln() {
@@ -19,7 +22,9 @@ card() {
 }
 
 card_create() {
-  if [ ! "$#" -eq 0 ]; then
+  if [ "$1" = "-h" ] || [ "$1" = "--help" ] || [ "$1" = "-?" ]; then
+    card_create__usage
+  elif [ ! "$#" -eq 0 ]; then
     [ "$2" = "" ] && info="NULL" || info="$2"
     id=$(date '+%s')
     reply=$(sqlite3 "$DB" "insert into cards(id, action, info) values("$id", '$1', '$info');" 2>&1)
@@ -36,8 +41,10 @@ card_create() {
   fi
 }
 
-card_create_usage() {
-  echo "card_create_usage: TODO"
+card_create__usage() {
+  echo "\
+Usage:
+  (1) $THISFILE $(echo $funcstack[1] | sed 's/__usage$//g' | tr '_' ' ') ACTION [INFO]"
 }
 
 card_view() {
@@ -57,26 +64,43 @@ card_usage() {
   echo "card_usage: TODO"
 }
 
-deck() {
+collection() {
   if [ ! "$#" -eq 0 ]; then
-    deck_"$@"
+    collection_"$@"
   else
-    deck_usage
+    collection_usage
   fi
 }
 
-deck_create() {
-  if [ -e "$1" ]; then
-    errln "File '$1' already exists. Nothing done."
+collection_create() {
+  if [ -e "$1" ] || [ -z "$1" ]; then
+    errln "File '$1' already exists or filename is empty. Nothing done."
     exit 1
   else
     sqlite3 "$1" 'create table cards(id integer primary key, action text not null, info text);'
-    logln "Created new deck '$1'."
+    sqlite3 "$1" 'create table schedule(id integer primary key, duesec integer, duesecprev integer, numrevs);'
+    logln "Created new collection '$1'."
   fi
 }
 
-deck_usage() {
-  echo "deck_usage: TODO"
+collection_usage() {
+  echo "collection_usage: TODO"
+}
+
+schedule() {
+  if [ ! "$#" -eq 0 ]; then
+    schedule_"$@"
+  else
+    schedule_usage
+  fi
+}
+
+schedule_update() {
+  echo hi
+}
+
+schedule_update() {
+  echo "schedule_update: TODO"
 }
 
 usage() {

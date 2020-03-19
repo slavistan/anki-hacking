@@ -117,9 +117,16 @@ schedule_fsmeval() {
           T=600
         fi
         ;;
+      600)
+        if [ "$q" -eq 4 ] || [ "$q" -eq 5 ]; then
+          T=86400
+        else
+          T=60
+        fi
+        ;;
       86400)
         if [ "$q" -eq 4 ] || [ "$q" -eq 5 ]; then
-          T=518400
+          T=345600
         elif [ "$q" -eq 3 ]; then
           T=86400
         else

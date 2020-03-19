@@ -2,6 +2,7 @@
 
 THISFILE=${0}
 THISDIR=${0:A:h}
+LC_NUMERIC=C # Make sure printf uses '.' in floating-point numbers
 
 DB="collection.vizn"
 
@@ -95,8 +96,61 @@ schedule() {
   fi
 }
 
-schedule_update() {
-  echo hi
+schedule_fsmeval() {
+  if [ "$1" = "-h" ] || [ "$1" = "--help" ] || [ "$1" = "-?" ]; then
+    schedule_fsmeval__usage 
+  elif [ "$#" -eq 3 ]; then
+    # TODO: Boundary checks
+    T="$1";e="$2";q="$3";
+    case $T in
+      0)
+        if [ "$q" -ge 0 ] && [ "$q" -le 3 ]; then
+          T=60
+        else
+          T=600
+        fi
+        ;;
+      60)
+        if [ "$q" -ge 0 ] && [ "$q" -le 3 ]; then
+          T=60
+        else
+          T=600
+        fi
+        ;;
+      86400)
+        if [ "$q" -eq 4 ] || [ "$q" -eq 5 ]; then
+          T=518400
+        elif [ "$q" -eq 3 ]; then
+          T=86400
+        else
+          T=600
+        fi
+        ;;
+      518400)
+        if [ "$q" -ge 3 ] && [ "$q" -le 5 ]; then
+          T=$(printf '%d' $(( T*e )))
+        else
+          T=600
+        fi
+        del=$(printf '%.1f' $(( 0.1 * (q-4) )) )
+        e=$(printf '%.1f' $(( e+del )) )
+        ;;
+      *)
+        break
+        ;;
+    esac
+    echo "{\"T\": $T, \"ε\": $e}"
+  fi
+}
+
+schedule_fsmeval__usage() {
+  echo "\
+Usage:
+  (1) $THISFILE $(echo $funcstack[1] | sed 's/__usage$//g' | tr '_' ' ') <T> <ε> <q>
+
+Computes the next iteration of scheduling parameters based on the previous
+interval 'T', the previous easyness factor 'ε' and the user's experienced
+difficulty 'q'. Updated values are returned as json-formatted string."
 }
 
 schedule_update() {

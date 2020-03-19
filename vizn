@@ -126,17 +126,14 @@ schedule_fsmeval() {
           T=600
         fi
         ;;
-      518400)
+      *)
         if [ "$q" -ge 3 ] && [ "$q" -le 5 ]; then
           T=$(printf '%d' $(( T*e )))
         else
           T=600
         fi
         del=$(printf '%.1f' $(( 0.1 * (q-4) )) )
-        e=$(printf '%.1f' $(( e+del )) )
-        ;;
-      *)
-        break
+        e=$(printf '%.1f' $(( e+del >= 1.3 ? e+del : 1.3 )) )
         ;;
     esac
     echo "{\"T\": $T, \"ε\": $e}"

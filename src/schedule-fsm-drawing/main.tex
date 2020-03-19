@@ -38,7 +38,9 @@
   \draw (q5) edge[below] node{$q \in \{3, 4, 5\}$} (q6);
   \draw (q5) edge[sloped, anchor=center, below] node{$q \in \{0, 1, 2\}$} (q3);
   \draw (q6) edge[loop below] node{$q \in \{3, 4, 5\}$} (q6);
-  \draw (q6) edge[left] node{$q \in \{0, 1, 2\}$} (q3);
+  \draw (q6) edge[left, align=right] node{
+    $q \in \{0, 1, 2\}$ \\
+    $\epsilon = \max\big(\epsilon_\text{min}, \epsilon+\Delta \epsilon \big)$} (q3);
 
 \end{tikzpicture}
 

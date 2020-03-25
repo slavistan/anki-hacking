@@ -50,6 +50,7 @@
   };
 
   \draw (q1) edge[incorr, sloped, anchor=center, above] node{$q \in \{0, 1, 2\}$} (q2);
+  \draw (q2) edge[incorr, loop above] node{$q \in \{0, 1, 2\}$} (q2);
   \draw (q1) edge[corr, sloped, anchor=center, below] node{$q \in \{3, 4, 5\}$} (q3);
   \draw (q3) edge[incorr, bend left, right] node{$q \in \{0, 1, 2 \}$} (q2);
   \draw (q2) edge[corr, bend left, right] node{$q \in \{3, 4, 5 \}$} (q3);

@@ -16,36 +16,36 @@
 
   \node[state, initial] (q1) {
     $\begin{aligned}
+      \epsilon &= 2.5 \\
       T &= 0 \\
-      \epsilon &= 2.5
     \end{aligned}$
   };
 
   \node[state, above right of=q1] (q2) {
     $\begin{aligned}
+      \epsilon &= f(\epsilon, q) \\
       T &= 1\text{min} \\
-      \epsilon &= f(\epsilon, q)
     \end{aligned}$
   };
 
   \node[state, below right of=q1] (q3) {
     $\begin{aligned}
+      \epsilon &= f(\epsilon, q) \\
       T &= 10\text{min} \\
-      \epsilon &= f(\epsilon, q)
     \end{aligned}$
   };
 
   \node[state, below right of=q3, align=center] (q4) {
     $\begin{aligned}
+      \epsilon &= f(\epsilon, q) \\
       T &= T \cdot \epsilon \\
-      \epsilon &= f(\epsilon, q)
     \end{aligned}$
   };
 
   \node[state, above right of=q4] (q5) {
     $\begin{aligned}
+      \epsilon &= f(\epsilon, q) \\
       T &= 1\text{d} \\
-      \epsilon &= f(\epsilon, q)
     \end{aligned}$
   };
 

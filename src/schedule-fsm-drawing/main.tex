@@ -1,5 +1,6 @@
-\documentclass[tikz]{standalone}
+\documentclass[tikz, xcolor=dvipsnames]{standalone}
 \usepackage{amsmath}
+\usepackage{xcolor}
 \usetikzlibrary{arrows, automata, positioning, calc}
 \begin{document}
 
@@ -9,38 +10,54 @@
     node distance=5cm, % specifies the minimum distance between two nodes. Change if necessary.
     every node/.style={font={\small}}, % sets the properties for each ’state’ node
     every state/.style={thick, fill=gray!10, font={\large}}, % sets the properties for each ’state’ node
+    corr/.style={color=green!65!black},
+    incorr/.style={color=red}
   ]
 
   \node[state, initial] (q1) {
     $\begin{aligned}
-      T &= 0\\
+      T &= 0 \\
       \epsilon &= 2.5
     \end{aligned}$
   };
-  \node[state, above right of=q1] (q2) {$T = 1min$};
-  \node[state, below right of=q1] (q3) {$T = 10min$};
-  \node[state, right of=q3] (q4) {$T = 1d$};
-  \node[state, below of=q4] (q5) {$T = 4d$};
-  \node[state, left of=q5, align=center] (q6) {%
-    $T = T \cdot \epsilon$ \\
-    $\epsilon = \max\{1.3, \epsilon + \Delta \epsilon \}$
+
+  \node[state, above right of=q1] (q2) {
+    $\begin{aligned}
+      T &= 1\text{min} \\
+      \epsilon &= f(\epsilon, q)
+    \end{aligned}$
   };
 
-  \draw (q1) edge[sloped, anchor=center, above] node{$q \in \{0, \ldots, 3\}$} (q2);
-  \draw (q1) edge[sloped, anchor=center, below] node{$q \in \{4, 5\}$} (q3);
-  \draw (q2) edge[bend left, right] node{$q \in \{4, 5 \}$} (q3);
-  \draw (q2) edge[loop above] node{$q \in \{0, \ldots, 3 \}$} (q2);
-  \draw (q3) edge[bend left, right] node{$q \in \{0, \ldots, 3 \}$} (q2);
-  \draw (q3) edge[bend left, above] node{$q \in \{4, 5\} $} (q4);
-  \draw (q4) edge[bend left, below] node{$q \in \{0, 1, 2\} $} (q3);
-  \draw (q4) edge[loop above] node{$q = 3$} (q4);
-  \draw (q4) edge[bend left, right] node{$q \in \{4, 5 \}$} (q5);
-  \draw (q5) edge[below] node{$q \in \{3, 4, 5\}$} (q6);
-  \draw (q5) edge[sloped, anchor=center, below] node{$q \in \{0, 1, 2\}$} (q3);
-  \draw (q6) edge[loop below] node{$q \in \{3, 4, 5\}$} (q6);
-  \draw (q6) edge[left, align=right] node{
-    $q \in \{0, 1, 2\}$ \\
-    $\epsilon = \max\big(\epsilon_\text{min}, \epsilon+\Delta \epsilon \big)$} (q3);
+  \node[state, below right of=q1] (q3) {
+    $\begin{aligned}
+      T &= 10\text{min} \\
+      \epsilon &= f(\epsilon, q)
+    \end{aligned}$
+  };
+
+  \node[state, below right of=q3, align=center] (q4) {
+    $\begin{aligned}
+      T &= T \cdot \epsilon \\
+      \epsilon &= f(\epsilon, q)
+    \end{aligned}$
+  };
+
+  \node[state, above right of=q4] (q5) {
+    $\begin{aligned}
+      T &= 1\text{d} \\
+      \epsilon &= f(\epsilon, q)
+    \end{aligned}$
+  };
+
+  \draw (q1) edge[incorr, sloped, anchor=center, above] node{$q \in \{0, 1, 2\}$} (q2);
+  \draw (q1) edge[corr, sloped, anchor=center, below] node{$q \in \{3, 4, 5\}$} (q3);
+  \draw (q3) edge[incorr, bend left, right] node{$q \in \{0, 1, 2 \}$} (q2);
+  \draw (q2) edge[corr, bend left, right] node{$q \in \{3, 4, 5 \}$} (q3);
+  \draw (q3) edge[corr, bend left, above] node{$q \in \{3, 4, 5\} $} (q5);
+  \draw (q5) edge[incorr, bend left, above] node{$q \in \{0, 1, 2\} $} (q3);
+  \draw (q5) edge[corr, sloped, anchor=center, below] node{$q \in \{3, 4, 5\} $} (q4);
+  \draw (q4) edge[incorr, sloped, anchor=center, below] node{$q \in \{0, 1, 2\} $} (q3);
+  \draw (q4) edge[corr, loop below] node{$q \in \{3, 4, 5\}$} (q4);
 
 \end{tikzpicture}
 

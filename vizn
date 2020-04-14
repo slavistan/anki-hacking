@@ -52,11 +52,15 @@ card_create() {
   eval "$HELPMACRO"
 
   if [ "$#" -ge 0 ] && [ "$#" -le 2 ]; then
-    [ -z "$2" ] && info="NULL" || info="$2"
 
-    id=$(date '+%s')
-    if re=$(sqlite3 -echo "$DB" "insert into cards(command, info) values('$1', '$info');" 2>&1); then
-      echo "$re"
+    if newid=$(sqlite3 $DB "INSERT INTO cards(command) VALUES('$1');" \
+                "SELECT seq FROM sqlite_sequence WHERE name='cards';" 2>&1); then
+      if [ ! -z "$2" ]; then
+        for tag in $(echo "$2" | tr ',' '\n'); do
+          sqlite3 $DB "INSERT INTO tags(cardid, tag) VALUES($newid, '$tag');"
+        done
+      fi
+      logln "Successfully added new card at id $newid."
     else
       tagecho "SQLI" "$re"
       errln "sqlite3 error. Nothing done."
@@ -69,7 +73,10 @@ card_create() {
 card_create__usage() {
   echo "\
 Usage:
-  (1) $THISFILE $(echo $funcstack[1] | sed 's/__usage$//g' | tr '_' ' ') ACTION [INFO]"
+  (1) $THISFILE $(echo $funcstack[1] | sed 's/__usage$//g' | tr '_' ' ') ACTION [TAGS]
+
+Add a card to the collection. Optionally, specify a comma-separated list of tags."
+
 }
 
 card_view() {

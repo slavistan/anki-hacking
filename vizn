@@ -4,7 +4,13 @@ THISFILE=${0}
 THISDIR=${0:A:h}
 LC_NUMERIC=C # Make sure printf uses '.' in floating-point numbers
 
-DB="collection.vizn"
+if [ "$1" = "-t" ] || [ "$1" = "--target-db" ]; then
+  DB="$2"
+  shift
+  shift
+else
+  DB="$THISDIR/collection.vizn"
+fi
 
 #
 # Macro to call funcname__usage if -h, --help, -? is passed as parameter

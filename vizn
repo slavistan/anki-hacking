@@ -21,24 +21,7 @@ HELPMACRO='if [ "$1" = "-h" ] || [ "$1" = "--help" ] || [ "$1" = "-?" ]; then
 exit
 fi'
 
-tagecho() {
-  TAG="$1"
-  shift
-  echo "$@" | sed 's/^/['"$TAG"'] /g'
-}
-
-errln() {
-  echo "\033[31;1m[ERR ]\033[0m $@"
-}
-
-logln() {
-  echo "\033[32;1m[INFO]\033[0m $@"
-}
-
-hlline() {
-  [ "$#" -eq 0 ] && n=1 || n="$1"
-  cat "-" | sed "$n,$n"' s/^\(.*\)$/'$(printf "\033[32;1m")'\1'$(printf "\033[0m")'/g'
-}
+source src/shell.zsh # utilities
 
 card() {
   eval "$HELPMACRO"
@@ -81,7 +64,7 @@ Add a card to the collection. Optionally, specify a comma-separated list of tags
 
 card_view() {
   if [ ! "$#" -eq 0 ]; then
-    reply=$(sqlite3 "$DB" "select action from cards where id==$1;" 2>&1)
+    reply=$(sqlite3 "$DB" "SELECT action FROM cards WHERE id=$1;" 2>&1)
     if [ "$?" -eq 0 ]; then
       logln "Viewing card '$1'."
       eval "$reply"
@@ -154,6 +137,8 @@ collection__usage() {
 }
 
 schedule() {
+  eval "$HELPMACRO"
+
   if [ ! "$#" -eq 0 ]; then
     schedule_"$@"
   else

@@ -1,6 +1,6 @@
 /* Cards - Essential table */
 CREATE TABLE cards (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  cardid INTEGER PRIMARY KEY AUTOINCREMENT,
   command TEXT NOT NULL
 );
 
@@ -27,5 +27,5 @@ CREATE TABLE reviews (
 
 CREATE TRIGGER schedule_new_card AFTER INSERT ON cards
 BEGIN
-  INSERT INTO schedules(cardid, duesec, t, e) VALUES(NEW.id, strftime('%s', 'now'), 0, 2.5);
+  INSERT INTO schedules(cardid, duesec, t, e) VALUES(NEW.cardid, strftime('%s', 'now'), 0, 2.5);
 END;

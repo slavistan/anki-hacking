@@ -1,10 +1,9 @@
 #!/usr/bin/env zsh
 
-
 THISFILE=${0}
 THISDIR=${0:A:h}
 
-source "$THISDIR/../src/shell.zsh"
+source "$THISDIR/../src/shell.zsh" # utilities
 
 VIZN="$(realpath $THISDIR/../vizn)" # vizn script
 
@@ -70,7 +69,3 @@ t_fkeycascade(){
 
 t_autoschedule
 t_fkeycascade
-
-
-# Todo:
-# Änderung Primärkey in Cards erzeugt Update in restlicher DB

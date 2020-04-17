@@ -11,5 +11,12 @@
   },
   "scripts": {
     "start": "npx cds run"
+  },
+  "cds": {
+    "requires": {
+      "db": {
+        "kind": "sqlite"
+      }
+    }
   }
 }

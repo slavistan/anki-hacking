@@ -16,10 +16,6 @@ module.exports = function(srv) {
     })
 
     srv.on ('foo', async (req) => {
-        await cds.connect.to('db')
-        const { Cards } = cds.entities;
-        tx = cds.transaction()
-        console.log(await tx.read(Cards))
         
         return 'Snafu'
     })

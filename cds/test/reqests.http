@@ -2,10 +2,15 @@ GET http://localhost:4004/cards/Cards
 
 ###
 
+GET http://localhost:4004/cards/Schedules
+
+###
+
 POST http://localhost:4004/cards/Cards
 Content-Type: application/json
 
-{ "command" : "echo snuuu" }
+{ "command" : "echo asdf" }
+# Cannot read property 'ref' of undefined
 
 ###
 

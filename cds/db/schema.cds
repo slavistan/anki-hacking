@@ -5,17 +5,17 @@ using { managed } from '@sap/cds/common';
 entity Cards {
     key ID : UUID;
     command : String not null;
-    schedule : Association to Schedules on schedule.card = $self;
+    schedule : Composition of one Schedules on schedule.card=$self;
     tags : Association to many Tags on tags.ID;
     reviews : Association to many Reviews on reviews.card = $self;
 }
 
 entity Schedules {
     key ID : UUID;
-    card : Association to Cards not null;
-    due : DateTime not null default CURRENT_TIMESTAMP; // seconds-since-epoch
-    t : Integer not null default 0; // time interval in seconds
-    e : Decimal not null default 2.5; // easyness
+    card : Association to Cards;
+    due : DateTime default CURRENT_TIMESTAMP; // seconds-since-epoch
+    t : Integer default 0; // time interval in seconds
+    e : Decimal default 2.5; // easyness
 }
 
 entity Tags {

@@ -2,7 +2,15 @@ GET http://localhost:4004/cards/Cards
 
 ###
 
-POST http://localhost:4004/cards/Cards HTTP/1.1
+POST http://localhost:4004/cards/Cards
 Content-Type: application/json
 
 { "command" : "echo snuuu" }
+
+###
+
+GET http://localhost:4004/debug/srvtime() HTTP/1.1
+
+###
+
+GET http://localhost:4004/debug/foo() HTTP/1.1

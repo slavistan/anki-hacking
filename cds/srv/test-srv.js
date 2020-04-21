@@ -9,9 +9,18 @@ module.exports = function(srv) {
         return x
     })
 
-    srv.on ('timetostring', req => {
+    srv.on ('timetostring', async (req) => {
         // var x = new Date(req.data.thedate)
         // console.log(x)
         return 'hi'
+    })
+
+    srv.on ('foo', async (req) => {
+        await cds.connect.to('db')
+        const { Cards } = cds.entities;
+        tx = cds.transaction()
+        console.log(await tx.read(Cards))
+        
+        return 'Snafu'
     })
 }

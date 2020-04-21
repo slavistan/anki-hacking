@@ -1,5 +1,5 @@
 {
-  "name": "cds",
+  "name": "cappa",
   "version": "1.0.0",
   "description": "A simple CAP project.",
   "repository": "<Add your repository here>",
@@ -7,9 +7,7 @@
   "private": true,
   "dependencies": {
     "@sap/cds": "^3",
-    "@sap/cds-dk": "^1.7.1",
-    "express": "^4",
-    "sqlite3": "^4.1.1"
+    "express": "^4"
   },
   "scripts": {
     "start": "npx cds run"

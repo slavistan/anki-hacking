@@ -1,14 +1,12 @@
-module.exports = srv => {
+module.exports = async (srv) => {
 
-    srv.after ('READ', 'Cards', cards => {
-        console.log(cards.data);
-    })
-    
-    srv.after ('CREATE', 'Cards', card => {
-        /* Schedule card */
-        console.log('Created card: ', card.ID);
+    srv.after ('CREATE', 'Cards', async (req) => {
 
-        // Connect to database & schedule
+        console.log("Created card:", req.ID)
+        
+         // await cds.connect.to('db')
+         const { Cards } = cds.entities;
+         console.log(await cds.read(Cards))
     })
 
 }

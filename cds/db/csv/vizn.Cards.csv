@@ -1,4 +1,4 @@
 command
-"echo yo"
-"date"
-"false"
+"dummy"
+"echo hi"
+"datetime"

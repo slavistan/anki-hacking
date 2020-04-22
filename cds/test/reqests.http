@@ -1,4 +1,4 @@
-GET http://localhost:4004/cards/Cards
+GET http://localhost:4004/cards/Cards?$expand=schedule
 
 ###
 
@@ -10,7 +10,6 @@ POST http://localhost:4004/cards/Cards
 Content-Type: application/json
 
 { "command" : "echo asdf", "schedule": {} }
-# Cannot read property 'ref' of undefined
 
 ###
 

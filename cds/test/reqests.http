@@ -9,7 +9,7 @@ GET http://localhost:4004/cards/Schedules
 POST http://localhost:4004/cards/Cards
 Content-Type: application/json
 
-{ "command" : "echo asdf" }
+{ "command" : "echo asdf", "schedule": {} }
 # Cannot read property 'ref' of undefined
 
 ###

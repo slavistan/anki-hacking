@@ -17,6 +17,7 @@ module.exports = function(srv) {
 
     srv.on ('foo', async (req) => {
         
-        return 'Snafu'
+        cds.run(cds.parse.cql(``))
+        return 'asf'
     })
 }

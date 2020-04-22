@@ -6,8 +6,8 @@ entity Cards {
     key ID : UUID;
     command : String not null;
     schedule : Composition of one Schedules on schedule.card=$self;
-    tags : Association to many Tags on tags.ID;
-    reviews : Association to many Reviews on reviews.card = $self;
+//    tags : Association to many Tags on tags.ID;
+    reviews : Composition of many Reviews on reviews.card = $self;
 }
 
 entity Schedules {
@@ -18,10 +18,12 @@ entity Schedules {
     e : Decimal default 2.5; // easyness
 }
 
-entity Tags {
-    key ID : UUID;
-    tag : String not null;
-}
+// entity Tags {
+//     key ID : UUID;
+//     tag : String not null;
+//     cards: Association to many Cards;
+// }
+// 
 
 entity Reviews {
     key ID : UUID;

@@ -10,6 +10,7 @@ entity Cards {
     reviews : Composition of many Reviews on reviews.card = $self;
 }
 
+
 entity Schedules {
     key ID : UUID;
     card : Association to Cards;

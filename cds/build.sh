@@ -13,7 +13,7 @@ case $1 in
     fifo=$tmpdir/fifo
     mkfifo $fifo
 
-    find '.' -type f -not -path '*/\.*' -not -name 'sqlite.db' |
+    find '.' -type f -not -path '*/\.*' -not -name 'sqlite.db' -not -path './node_modules/*' |
       entr -r $0 reload $wid $fifo
     ;;
   reload)

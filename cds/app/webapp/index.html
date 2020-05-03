@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-
-
-    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
-    <title>Bookshop</title>
-
+    <link rel="stylesheet" href="../../node_modules/xterm/css/xterm.css" />
+    <script src="../../node_modules/xterm/lib/xterm.js"></script>
 </head>
 <body>
-    <script src='script.js'></script>
+    <div id="terminal"></div>
+    <script>
+        let term = new Terminal()
+        term.open(document.getElementById('terminal'))
+        term.write('Hello world!')
+    </script>
 </body>
 </html>

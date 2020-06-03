@@ -18,7 +18,10 @@
   "cds": {
     "requires": {
       "db": {
-        "kind": "sqlite"
+        "kind": "sqlite",
+        "pool": {
+          "max": 256
+        }
       }
     }
   }

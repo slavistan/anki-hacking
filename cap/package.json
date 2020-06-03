@@ -9,7 +9,8 @@
     "@sap/cds": "^3",
     "express": "^4",
     "sqlite3": "^4.2.0",
-    "supertest": "^4.0.2"
+    "supertest": "^4.0.2",
+    "xterm": "^4.5.0"
   },
   "scripts": {
     "start": "npx cds run",

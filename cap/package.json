@@ -23,6 +23,9 @@
         "model": "./db/schema.cds",
         "credentials": {
           "database": "schema.db"
+        },
+          "pool": {
+          "max": 256
         }
       }
     }

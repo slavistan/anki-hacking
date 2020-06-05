@@ -1,0 +1,18 @@
+### List card information
+
+GET http://localhost:4004/admin/Cards
+
+###
+
+POST http://localhost:4004/admin/ContentBasic
+Content-Type: application/json
+
+{ "front" : "dog", "back": "der Hund" }
+
+###
+
+GET http://localhost:4004/debug/srvtime() HTTP/1.1
+
+###
+
+GET http://localhost:4004/debug/foo() HTTP/1.1

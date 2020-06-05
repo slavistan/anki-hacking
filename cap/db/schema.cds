@@ -1,30 +1,19 @@
 namespace vizn;
 
-using { managed } from '@sap/cds/common';
+using { cuid } from '@sap/cds/common';
 
-entity Cards {
-    key ID : UUID;
-    command : String not null;
-    schedule : Composition of one Schedules on schedule.card=$self;
-//    tags : Association to many Tags on tags.ID;
-    reviews : Composition of many Reviews on reviews.card = $self;
+type CardType: String enum {
+    Basic
 }
 
-
-entity Schedules {
-    key ID : UUID;
-    card : Association to Cards;
+/* Cards (meta) info - Never modified directly */
+entity Cards: cuid {
+    type : CardType;
     due : DateTime default CURRENT_TIMESTAMP; // seconds-since-epoch
     t : Integer default 0; // time interval in seconds
     e : Decimal default 2.5; // easyness
+    reviews : Composition of many Reviews on reviews.card=$self;
 }
-
-// entity Tags {
-//     key ID : UUID;
-//     tag : String not null;
-//     cards: Association to many Cards;
-// }
-// 
 
 entity Reviews {
     key ID : UUID;
@@ -38,4 +27,11 @@ entity Reviews {
         corr_ok = 4;
         corr_easy = 5; // 0 : too easy
     } not null;
+}
+
+/* Basic cards info - May be modified by the user */
+entity ContentBasic {
+    key card_ID: UUID;
+    front: String;
+    back: String;
 }

@@ -19,7 +19,11 @@
   "cds": {
     "requires": {
       "db": {
-        "kind": "sqlite"
+        "kind": "sqlite",
+        "model": "./db/schema.cds",
+        "credentials": {
+          "database": "schema.db"
+        }
       }
     }
   }
